@@ -16,9 +16,17 @@
       "settings": {
         "menu": "main-menu"
       }
+    },
+    "custom_section_97GMFd": {
+      "type": "custom-section",
+      "name": "t:general.custom_section",
+      "settings": {
+        "background_image": "shopify://shop_images/1000120066.png"
+      }
     }
   },
   "order": [
+    "custom_section_97GMFd",
     "header"
   ]
 }
