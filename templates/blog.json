@@ -9,12 +9,75 @@
  */
 {
   "sections": {
+    "176180138369b8d822": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_7193dd1_BanFj8": {
+          "type": "ai_gen_block_7193dd1",
+          "settings": {
+            "max_width": 1200,
+            "section_padding": 50,
+            "grid_gap": 30,
+            "background_color": "#ffffff",
+            "text_color": "#1a1a1a",
+            "category_color": "#ff6b6b",
+            "hero_text_color": "#ffffff",
+            "card_background": "#f9f9f9",
+            "card_border_color": "#e5e5e5",
+            "image_border_radius": 8,
+            "card_border_radius": 12,
+            "hero_title_size": 42,
+            "hero_excerpt_size": 18,
+            "card_title_size": 18,
+            "card_excerpt_size": 14,
+            "feature_title_size": 20,
+            "feature_excerpt_size": 14,
+            "hero_category": "Fashion",
+            "hero_title": "The Future of Sustainable Fashion",
+            "hero_excerpt": "Exploring innovative materials and ethical practices shaping the industry",
+            "hero_author": "Sarah Johnson",
+            "hero_date": "October 30, 2025",
+            "card_1_category": "Style",
+            "card_1_title": "Minimalist Wardrobe Essentials",
+            "card_1_excerpt": "Building a versatile closet with timeless pieces",
+            "card_1_author": "Emma Davis",
+            "card_1_date": "October 28, 2025",
+            "card_2_category": "Trends",
+            "card_2_title": "Color Palettes for Autumn",
+            "card_2_excerpt": "Warm tones and rich hues dominating this season",
+            "card_2_author": "Michael Chen",
+            "card_2_date": "October 26, 2025",
+            "feature_1_category": "Accessories",
+            "feature_1_title": "Statement Jewelry Trends",
+            "feature_1_excerpt": "Bold pieces that elevate any outfit",
+            "feature_1_author": "Lisa Park",
+            "feature_1_date": "October 25, 2025",
+            "feature_2_category": "Beauty",
+            "feature_2_title": "Natural Skincare Routines",
+            "feature_2_excerpt": "Organic products for healthy, glowing skin",
+            "feature_2_author": "Rachel Green",
+            "feature_2_date": "October 24, 2025",
+            "feature_3_category": "Lifestyle",
+            "feature_3_title": "Capsule Wardrobe Guide",
+            "feature_3_excerpt": "Simplify your style with curated essentials",
+            "feature_3_author": "David Kim",
+            "feature_3_date": "October 23, 2025"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_7193dd1_BanFj8"
+      ],
+      "settings": {}
+    },
     "main": {
       "type": "blog",
       "settings": {}
     }
   },
   "order": [
+    "176180138369b8d822",
     "main"
   ]
 }
