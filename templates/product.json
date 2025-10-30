@@ -12,9 +12,23 @@
     "main": {
       "type": "product",
       "settings": {}
+    },
+    "17618008472c9a13e7": {
+      "type": "apps",
+      "blocks": {
+        "expo_product_options_expo_block_CkAQiD": {
+          "type": "shopify://apps/expo-product-options/blocks/expo-block/07e9c3c4-4d7c-4540-8004-198ebcc5815d",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "expo_product_options_expo_block_CkAQiD"
+      ],
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "17618008472c9a13e7"
   ]
 }
