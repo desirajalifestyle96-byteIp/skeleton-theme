@@ -9,12 +9,67 @@
  */
 {
   "sections": {
+    "1761801004e97164b1": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_48e0b7a_RXQGRA": {
+          "type": "ai_gen_block_48e0b7a",
+          "settings": {
+            "max_width": 1200,
+            "section_padding": 60,
+            "grid_gap": 30,
+            "image_border_radius": 4,
+            "show_divider": true,
+            "divider_spacing": 30,
+            "background_color": "#ffffff",
+            "text_color": "#1a1a1a",
+            "accent_color": "#d4af37",
+            "hero_title_size": 48,
+            "secondary_title_size": 24,
+            "tertiary_title_size": 16,
+            "hero_category": "Featured",
+            "hero_title": "The Future of Fashion: Sustainable Style Meets Innovation",
+            "hero_excerpt": "Discover how leading designers are revolutionizing the industry with eco-friendly materials and cutting-edge technology.",
+            "hero_author": "Priya Sharma",
+            "hero_date": "October 30, 2025",
+            "secondary_1_category": "Trends",
+            "secondary_1_title": "Street Style Spotlight: Delhi's Fashion Week Highlights",
+            "secondary_1_excerpt": "From vibrant colors to bold patterns, see what caught our eye on the streets of India's fashion capital.",
+            "secondary_1_author": "Ananya Verma",
+            "secondary_1_date": "October 28, 2025",
+            "secondary_2_category": "Culture",
+            "secondary_2_title": "Traditional Textiles in Modern Design",
+            "secondary_2_excerpt": "How contemporary designers are breathing new life into age-old weaving techniques and handloom traditions.",
+            "secondary_2_author": "Rajesh Kumar",
+            "secondary_2_date": "October 27, 2025",
+            "tertiary_1_category": "Style",
+            "tertiary_1_title": "5 Must-Have Accessories for Festive Season",
+            "tertiary_1_author": "Meera Patel",
+            "tertiary_1_date": "October 26, 2025",
+            "tertiary_2_category": "Beauty",
+            "tertiary_2_title": "Skincare Routines from Top Models",
+            "tertiary_2_author": "Kavya Singh",
+            "tertiary_2_date": "October 25, 2025",
+            "tertiary_3_category": "Interview",
+            "tertiary_3_title": "Designer Spotlight: Rising Stars of 2025",
+            "tertiary_3_author": "Arjun Mehta",
+            "tertiary_3_date": "October 24, 2025"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_48e0b7a_RXQGRA"
+      ],
+      "settings": {}
+    },
     "main": {
       "type": "page",
       "settings": {}
     }
   },
   "order": [
+    "1761801004e97164b1",
     "main"
   ]
 }
