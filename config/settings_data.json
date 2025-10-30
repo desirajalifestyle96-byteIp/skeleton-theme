@@ -8,5 +8,52 @@
  * ------------------------------------------------------------
  */
 {
-  "current": {}
+  "current": {
+    "content_for_index": [],
+    "blocks": {
+      "16278478101612877664": {
+        "type": "shopify://apps/pagefly-page-builder/blocks/app-embed/83e179f7-59a0-4589-8c66-c0dddf959200",
+        "disabled": false,
+        "settings": {}
+      },
+      "15418052891816840908": {
+        "type": "shopify://apps/expo-product-options/blocks/expo-embed/07e9c3c4-4d7c-4540-8004-198ebcc5815d",
+        "disabled": false,
+        "settings": {
+          "swatch_width": 40,
+          "swatch_height": 40,
+          "swatch_selected_border_width": 1,
+          "swatch_selected_border_color": "#000000",
+          "swatch_zoom_size": 200,
+          "button_bg_color": "linear-gradient(#ffffff, #ffffff)",
+          "button_border_color": "#000000",
+          "button_selected_bg_color": "linear-gradient(#000000, #000000)",
+          "button_selected_text_color": "#ffffff",
+          "button_selected_border_color": "#000000",
+          "hide_extra_cost": false,
+          "extra_subtotal_text_color": "#000000"
+        }
+      },
+      "15746506029051422284": {
+        "type": "shopify://apps/mega-code-embed/blocks/code-body/f06216cf-23cd-4ffb-8719-16e9a878d094",
+        "disabled": false,
+        "settings": {
+          "html_code": "",
+          "css_code": "",
+          "js_code": "",
+          "liquid_code": ""
+        }
+      },
+      "13768625480086291342": {
+        "type": "shopify://apps/forms/blocks/forms/8744a304-fcb1-4347-b211-bb6b4759a76a",
+        "disabled": false,
+        "settings": {}
+      },
+      "1232542678405107163": {
+        "type": "shopify://apps/instafeed/blocks/head-block/c447db20-095d-4a10-9725-b5977662c9d5",
+        "disabled": false,
+        "settings": {}
+      }
+    }
+  }
 }
