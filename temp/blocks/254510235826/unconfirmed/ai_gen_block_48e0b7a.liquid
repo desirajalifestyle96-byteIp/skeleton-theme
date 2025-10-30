@@ -1,6 +1,851 @@
+{% doc %}
+  @prompt
+    A magazine-style editorial layout
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-magazine-layout-{{ ai_gen_id }} {
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+    padding: {{ block.settings.section_padding }}px 20px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-magazine-layout__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+  }
+
+  .ai-magazine-layout__hero-{{ ai_gen_id }} {
+    grid-column: span 12;
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ block.settings.image_border_radius }}px;
+    min-height: 400px;
+  }
+
+  .ai-magazine-layout__hero-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-magazine-layout__hero-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ai-magazine-layout__hero-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    max-height: 500px;
+  }
+
+  .ai-magazine-layout__hero-content-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: #ffffff;
+  }
+
+  .ai-magazine-layout__hero-category-{{ ai_gen_id }} {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+    color: {{ block.settings.accent_color }};
+    font-weight: 600;
+  }
+
+  .ai-magazine-layout__hero-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.hero_title_size }}px;
+    line-height: 1.2;
+    margin: 0 0 12px;
+    font-weight: 700;
+  }
+
+  .ai-magazine-layout__hero-excerpt-{{ ai_gen_id }} {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0 0 16px;
+    opacity: 0.9;
+  }
+
+  .ai-magazine-layout__hero-meta-{{ ai_gen_id }} {
+    font-size: 14px;
+    opacity: 0.8;
+  }
+
+  .ai-magazine-layout__secondary-{{ ai_gen_id }} {
+    grid-column: span 6;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ai-magazine-layout__secondary-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ block.settings.image_border_radius }}px;
+    margin-bottom: 16px;
+    aspect-ratio: 16 / 10;
+  }
+
+  .ai-magazine-layout__secondary-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-magazine-layout__secondary-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-magazine-layout__secondary-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+  }
+
+  .ai-magazine-layout__secondary-category-{{ ai_gen_id }} {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 8px;
+    color: {{ block.settings.accent_color }};
+    font-weight: 600;
+  }
+
+  .ai-magazine-layout__secondary-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.secondary_title_size }}px;
+    line-height: 1.3;
+    margin: 0 0 12px;
+    font-weight: 700;
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-magazine-layout__secondary-excerpt-{{ ai_gen_id }} {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 12px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.8;
+  }
+
+  .ai-magazine-layout__secondary-meta-{{ ai_gen_id }} {
+    font-size: 13px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.6;
+    margin-top: auto;
+  }
+
+  .ai-magazine-layout__tertiary-{{ ai_gen_id }} {
+    grid-column: span 4;
+    display: flex;
+    gap: 16px;
+  }
+
+  .ai-magazine-layout__tertiary-image-wrapper-{{ ai_gen_id }} {
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+    border-radius: {{ block.settings.image_border_radius }}px;
+    overflow: hidden;
+  }
+
+  .ai-magazine-layout__tertiary-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-magazine-layout__tertiary-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-magazine-layout__tertiary-placeholder-{{ ai_gen_id }} svg {
+    width: 60px;
+    height: 60px;
+  }
+
+  .ai-magazine-layout__tertiary-content-{{ ai_gen_id }} {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ai-magazine-layout__tertiary-category-{{ ai_gen_id }} {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    color: {{ block.settings.accent_color }};
+    font-weight: 600;
+  }
+
+  .ai-magazine-layout__tertiary-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.tertiary_title_size }}px;
+    line-height: 1.4;
+    margin: 0 0 8px;
+    font-weight: 600;
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-magazine-layout__tertiary-meta-{{ ai_gen_id }} {
+    font-size: 12px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.6;
+    margin-top: auto;
+  }
+
+  .ai-magazine-layout__divider-{{ ai_gen_id }} {
+    grid-column: span 12;
+    height: 1px;
+    background-color: {{ block.settings.text_color }};
+    opacity: 0.1;
+    margin: {{ block.settings.divider_spacing }}px 0;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-magazine-layout__secondary-{{ ai_gen_id }} {
+      grid-column: span 12;
+    }
+
+    .ai-magazine-layout__tertiary-{{ ai_gen_id }} {
+      grid-column: span 6;
+    }
+
+    .ai-magazine-layout__hero-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.hero_title_size }}px * 0.7);
+    }
+
+    .ai-magazine-layout__secondary-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.secondary_title_size }}px * 0.85);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-magazine-layout-{{ ai_gen_id }} {
+      padding: {{ block.settings.section_padding | times: 0.6 }}px 16px;
+    }
+
+    .ai-magazine-layout__grid-{{ ai_gen_id }} {
+      gap: {{ block.settings.grid_gap | times: 0.7 }}px;
+    }
+
+    .ai-magazine-layout__hero-{{ ai_gen_id }} {
+      min-height: 300px;
+    }
+
+    .ai-magazine-layout__hero-content-{{ ai_gen_id }} {
+      padding: 24px;
+    }
+
+    .ai-magazine-layout__hero-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.hero_title_size }}px * 0.5);
+    }
+
+    .ai-magazine-layout__secondary-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.secondary_title_size }}px * 0.75);
+    }
+
+    .ai-magazine-layout__tertiary-{{ ai_gen_id }} {
+      grid-column: span 12;
+    }
+
+    .ai-magazine-layout__tertiary-image-wrapper-{{ ai_gen_id }} {
+      width: 80px;
+      height: 80px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-magazine-layout-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-magazine-layout__grid-{{ ai_gen_id }}">
+    <article class="ai-magazine-layout__hero-{{ ai_gen_id }}">
+      {% if block.settings.hero_image %}
+        <img
+          src="{{ block.settings.hero_image | image_url: width: 1600 }}"
+          alt="{{ block.settings.hero_image.alt | escape }}"
+          loading="lazy"
+          width="{{ block.settings.hero_image.width }}"
+          height="{{ block.settings.hero_image.height }}"
+          class="ai-magazine-layout__hero-image-{{ ai_gen_id }}"
+        >
+      {% else %}
+        <div class="ai-magazine-layout__hero-placeholder-{{ ai_gen_id }}">
+          {{ 'hero-apparel-1' | placeholder_svg_tag }}
+        </div>
+      {% endif %}
+      <div class="ai-magazine-layout__hero-content-{{ ai_gen_id }}">
+        {% if block.settings.hero_category != blank %}
+          <div class="ai-magazine-layout__hero-category-{{ ai_gen_id }}">{{ block.settings.hero_category }}</div>
+        {% endif %}
+        {% if block.settings.hero_title != blank %}
+          <h2 class="ai-magazine-layout__hero-title-{{ ai_gen_id }}">{{ block.settings.hero_title }}</h2>
+        {% endif %}
+        {% if block.settings.hero_excerpt != blank %}
+          <div class="ai-magazine-layout__hero-excerpt-{{ ai_gen_id }}">{{ block.settings.hero_excerpt }}</div>
+        {% endif %}
+        {% if block.settings.hero_author != blank or block.settings.hero_date != blank %}
+          <div class="ai-magazine-layout__hero-meta-{{ ai_gen_id }}">
+            {% if block.settings.hero_author != blank %}{{ block.settings.hero_author }}{% endif %}
+            {% if block.settings.hero_author != blank and block.settings.hero_date != blank %} • {% endif %}
+            {% if block.settings.hero_date != blank %}{{ block.settings.hero_date }}{% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </article>
+
+    {% if block.settings.show_divider %}
+      <div class="ai-magazine-layout__divider-{{ ai_gen_id }}"></div>
+    {% endif %}
+
+    <article class="ai-magazine-layout__secondary-{{ ai_gen_id }}">
+      <div class="ai-magazine-layout__secondary-image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.secondary_1_image %}
+          <img
+            src="{{ block.settings.secondary_1_image | image_url: width: 800 }}"
+            alt="{{ block.settings.secondary_1_image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.secondary_1_image.width }}"
+            height="{{ block.settings.secondary_1_image.height }}"
+            class="ai-magazine-layout__secondary-image-{{ ai_gen_id }}"
+          >
+        {% else %}
+          <div class="ai-magazine-layout__secondary-placeholder-{{ ai_gen_id }}">
+            {{ 'collection-apparel-1' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+      </div>
+      {% if block.settings.secondary_1_category != blank %}
+        <div class="ai-magazine-layout__secondary-category-{{ ai_gen_id }}">{{ block.settings.secondary_1_category }}</div>
+      {% endif %}
+      {% if block.settings.secondary_1_title != blank %}
+        <h3 class="ai-magazine-layout__secondary-title-{{ ai_gen_id }}">{{ block.settings.secondary_1_title }}</h3>
+      {% endif %}
+      {% if block.settings.secondary_1_excerpt != blank %}
+        <div class="ai-magazine-layout__secondary-excerpt-{{ ai_gen_id }}">{{ block.settings.secondary_1_excerpt }}</div>
+      {% endif %}
+      {% if block.settings.secondary_1_author != blank or block.settings.secondary_1_date != blank %}
+        <div class="ai-magazine-layout__secondary-meta-{{ ai_gen_id }}">
+          {% if block.settings.secondary_1_author != blank %}{{ block.settings.secondary_1_author }}{% endif %}
+          {% if block.settings.secondary_1_author != blank and block.settings.secondary_1_date != blank %} • {% endif %}
+          {% if block.settings.secondary_1_date != blank %}{{ block.settings.secondary_1_date }}{% endif %}
+        </div>
+      {% endif %}
+    </article>
+
+    <article class="ai-magazine-layout__secondary-{{ ai_gen_id }}">
+      <div class="ai-magazine-layout__secondary-image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.secondary_2_image %}
+          <img
+            src="{{ block.settings.secondary_2_image | image_url: width: 800 }}"
+            alt="{{ block.settings.secondary_2_image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.secondary_2_image.width }}"
+            height="{{ block.settings.secondary_2_image.height }}"
+            class="ai-magazine-layout__secondary-image-{{ ai_gen_id }}"
+          >
+        {% else %}
+          <div class="ai-magazine-layout__secondary-placeholder-{{ ai_gen_id }}">
+            {{ 'product-apparel-1' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+      </div>
+      {% if block.settings.secondary_2_category != blank %}
+        <div class="ai-magazine-layout__secondary-category-{{ ai_gen_id }}">{{ block.settings.secondary_2_category }}</div>
+      {% endif %}
+      {% if block.settings.secondary_2_title != blank %}
+        <h3 class="ai-magazine-layout__secondary-title-{{ ai_gen_id }}">{{ block.settings.secondary_2_title }}</h3>
+      {% endif %}
+      {% if block.settings.secondary_2_excerpt != blank %}
+        <div class="ai-magazine-layout__secondary-excerpt-{{ ai_gen_id }}">{{ block.settings.secondary_2_excerpt }}</div>
+      {% endif %}
+      {% if block.settings.secondary_2_author != blank or block.settings.secondary_2_date != blank %}
+        <div class="ai-magazine-layout__secondary-meta-{{ ai_gen_id }}">
+          {% if block.settings.secondary_2_author != blank %}{{ block.settings.secondary_2_author }}{% endif %}
+          {% if block.settings.secondary_2_author != blank and block.settings.secondary_2_date != blank %} • {% endif %}
+          {% if block.settings.secondary_2_date != blank %}{{ block.settings.secondary_2_date }}{% endif %}
+        </div>
+      {% endif %}
+    </article>
+
+    {% if block.settings.show_divider %}
+      <div class="ai-magazine-layout__divider-{{ ai_gen_id }}"></div>
+    {% endif %}
+
+    <article class="ai-magazine-layout__tertiary-{{ ai_gen_id }}">
+      <div class="ai-magazine-layout__tertiary-image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.tertiary_1_image %}
+          <img
+            src="{{ block.settings.tertiary_1_image | image_url: width: 200 }}"
+            alt="{{ block.settings.tertiary_1_image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.tertiary_1_image.width }}"
+            height="{{ block.settings.tertiary_1_image.height }}"
+            class="ai-magazine-layout__tertiary-image-{{ ai_gen_id }}"
+          >
+        {% else %}
+          <div class="ai-magazine-layout__tertiary-placeholder-{{ ai_gen_id }}">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+      </div>
+      <div class="ai-magazine-layout__tertiary-content-{{ ai_gen_id }}">
+        {% if block.settings.tertiary_1_category != blank %}
+          <div class="ai-magazine-layout__tertiary-category-{{ ai_gen_id }}">{{ block.settings.tertiary_1_category }}</div>
+        {% endif %}
+        {% if block.settings.tertiary_1_title != blank %}
+          <h4 class="ai-magazine-layout__tertiary-title-{{ ai_gen_id }}">{{ block.settings.tertiary_1_title }}</h4>
+        {% endif %}
+        {% if block.settings.tertiary_1_author != blank or block.settings.tertiary_1_date != blank %}
+          <div class="ai-magazine-layout__tertiary-meta-{{ ai_gen_id }}">
+            {% if block.settings.tertiary_1_author != blank %}{{ block.settings.tertiary_1_author }}{% endif %}
+            {% if block.settings.tertiary_1_author != blank and block.settings.tertiary_1_date != blank %} • {% endif %}
+            {% if block.settings.tertiary_1_date != blank %}{{ block.settings.tertiary_1_date }}{% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </article>
+
+    <article class="ai-magazine-layout__tertiary-{{ ai_gen_id }}">
+      <div class="ai-magazine-layout__tertiary-image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.tertiary_2_image %}
+          <img
+            src="{{ block.settings.tertiary_2_image | image_url: width: 200 }}"
+            alt="{{ block.settings.tertiary_2_image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.tertiary_2_image.width }}"
+            height="{{ block.settings.tertiary_2_image.height }}"
+            class="ai-magazine-layout__tertiary-image-{{ ai_gen_id }}"
+          >
+        {% else %}
+          <div class="ai-magazine-layout__tertiary-placeholder-{{ ai_gen_id }}">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+      </div>
+      <div class="ai-magazine-layout__tertiary-content-{{ ai_gen_id }}">
+        {% if block.settings.tertiary_2_category != blank %}
+          <div class="ai-magazine-layout__tertiary-category-{{ ai_gen_id }}">{{ block.settings.tertiary_2_category }}</div>
+        {% endif %}
+        {% if block.settings.tertiary_2_title != blank %}
+          <h4 class="ai-magazine-layout__tertiary-title-{{ ai_gen_id }}">{{ block.settings.tertiary_2_title }}</h4>
+        {% endif %}
+        {% if block.settings.tertiary_2_author != blank or block.settings.tertiary_2_date != blank %}
+          <div class="ai-magazine-layout__tertiary-meta-{{ ai_gen_id }}">
+            {% if block.settings.tertiary_2_author != blank %}{{ block.settings.tertiary_2_author }}{% endif %}
+            {% if block.settings.tertiary_2_author != blank and block.settings.tertiary_2_date != blank %} • {% endif %}
+            {% if block.settings.tertiary_2_date != blank %}{{ block.settings.tertiary_2_date }}{% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </article>
+
+    <article class="ai-magazine-layout__tertiary-{{ ai_gen_id }}">
+      <div class="ai-magazine-layout__tertiary-image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.tertiary_3_image %}
+          <img
+            src="{{ block.settings.tertiary_3_image | image_url: width: 200 }}"
+            alt="{{ block.settings.tertiary_3_image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.tertiary_3_image.width }}"
+            height="{{ block.settings.tertiary_3_image.height }}"
+            class="ai-magazine-layout__tertiary-image-{{ ai_gen_id }}"
+          >
+        {% else %}
+          <div class="ai-magazine-layout__tertiary-placeholder-{{ ai_gen_id }}">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+      </div>
+      <div class="ai-magazine-layout__tertiary-content-{{ ai_gen_id }}">
+        {% if block.settings.tertiary_3_category != blank %}
+          <div class="ai-magazine-layout__tertiary-category-{{ ai_gen_id }}">{{ block.settings.tertiary_3_category }}</div>
+        {% endif %}
+        {% if block.settings.tertiary_3_title != blank %}
+          <h4 class="ai-magazine-layout__tertiary-title-{{ ai_gen_id }}">{{ block.settings.tertiary_3_title }}</h4>
+        {% endif %}
+        {% if block.settings.tertiary_3_author != blank or block.settings.tertiary_3_date != blank %}
+          <div class="ai-magazine-layout__tertiary-meta-{{ ai_gen_id }}">
+            {% if block.settings.tertiary_3_author != blank %}{{ block.settings.tertiary_3_author }}{% endif %}
+            {% if block.settings.tertiary_3_author != blank and block.settings.tertiary_3_date != blank %} • {% endif %}
+            {% if block.settings.tertiary_3_date != blank %}{{ block.settings.tertiary_3_date }}{% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </article>
+  </div>
+</div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Magazine editorial layout",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 800,
+      "max": 1600,
+      "step": 100,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Section padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Grid gap",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Image border radius",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Show dividers",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "divider_spacing",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Divider spacing",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#d4af37"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "hero_title_size",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Hero title size",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "secondary_title_size",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Secondary title size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "tertiary_title_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tertiary title size",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Hero article"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "hero_category",
+      "label": "Category",
+      "default": "Featured"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Title",
+      "default": "The Future of Fashion: Sustainable Style Meets Innovation"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_excerpt",
+      "label": "Excerpt",
+      "default": "Discover how leading designers are revolutionizing the industry with eco-friendly materials and cutting-edge technology."
+    },
+    {
+      "type": "text",
+      "id": "hero_author",
+      "label": "Author",
+      "default": "Priya Sharma"
+    },
+    {
+      "type": "text",
+      "id": "hero_date",
+      "label": "Date",
+      "default": "October 30, 2025"
+    },
+    {
+      "type": "header",
+      "content": "Secondary article 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "secondary_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "secondary_1_category",
+      "label": "Category",
+      "default": "Trends"
+    },
+    {
+      "type": "text",
+      "id": "secondary_1_title",
+      "label": "Title",
+      "default": "Street Style Spotlight: Delhi's Fashion Week Highlights"
+    },
+    {
+      "type": "textarea",
+      "id": "secondary_1_excerpt",
+      "label": "Excerpt",
+      "default": "From vibrant colors to bold patterns, see what caught our eye on the streets of India's fashion capital."
+    },
+    {
+      "type": "text",
+      "id": "secondary_1_author",
+      "label": "Author",
+      "default": "Ananya Verma"
+    },
+    {
+      "type": "text",
+      "id": "secondary_1_date",
+      "label": "Date",
+      "default": "October 28, 2025"
+    },
+    {
+      "type": "header",
+      "content": "Secondary article 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "secondary_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "secondary_2_category",
+      "label": "Category",
+      "default": "Culture"
+    },
+    {
+      "type": "text",
+      "id": "secondary_2_title",
+      "label": "Title",
+      "default": "Traditional Textiles in Modern Design"
+    },
+    {
+      "type": "textarea",
+      "id": "secondary_2_excerpt",
+      "label": "Excerpt",
+      "default": "How contemporary designers are breathing new life into age-old weaving techniques and handloom traditions."
+    },
+    {
+      "type": "text",
+      "id": "secondary_2_author",
+      "label": "Author",
+      "default": "Rajesh Kumar"
+    },
+    {
+      "type": "text",
+      "id": "secondary_2_date",
+      "label": "Date",
+      "default": "October 27, 2025"
+    },
+    {
+      "type": "header",
+      "content": "Tertiary article 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "tertiary_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tertiary_1_category",
+      "label": "Category",
+      "default": "Style"
+    },
+    {
+      "type": "text",
+      "id": "tertiary_1_title",
+      "label": "Title",
+      "default": "5 Must-Have Accessories for Festive Season"
+    },
+    {
+      "type": "text",
+      "id": "tertiary_1_author",
+      "label": "Author",
+      "default": "Meera Patel"
+    },
+    {
+      "type": "text",
+      "id": "tertiary_1_date",
+      "label": "Date",
+      "default": "October 26, 2025"
+    },
+    {
+      "type": "header",
+      "content": "Tertiary article 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "tertiary_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tertiary_2_category",
+      "label": "Category",
+      "default": "Beauty"
+    },
+    {
+      "type": "text",
+      "id": "tertiary_2_title",
+      "label": "Title",
+      "default": "Skincare Routines from Top Models"
+    },
+    {
+      "type": "text",
+      "id": "tertiary_2_author",
+      "label": "Author",
+      "default": "Kavya Singh"
+    },
+    {
+      "type": "text",
+      "id": "tertiary_2_date",
+      "label": "Date",
+      "default": "October 25, 2025"
+    },
+    {
+      "type": "header",
+      "content": "Tertiary article 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "tertiary_3_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tertiary_3_category",
+      "label": "Category",
+      "default": "Interview"
+    },
+    {
+      "type": "text",
+      "id": "tertiary_3_title",
+      "label": "Title",
+      "default": "Designer Spotlight: Rising Stars of 2025"
+    },
+    {
+      "type": "text",
+      "id": "tertiary_3_author",
+      "label": "Author",
+      "default": "Arjun Mehta"
+    },
+    {
+      "type": "text",
+      "id": "tertiary_3_date",
+      "label": "Date",
+      "default": "October 24, 2025"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Magazine editorial layout"
+    }
+  ]
+}
 {% endschema %}
